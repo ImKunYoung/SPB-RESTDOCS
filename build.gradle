@@ -2,7 +2,7 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '2.5.6'
     id 'io.spring.dependency-management' version '1.1.0'
-    id "org.asciidoctor.jvm.convert" version "3.3.2"
+    id "org.asciidoctor.convert" version "1.5.9.2" // (1) AsciiDoc 파일을 컨버팅하고 Build 폴더에 복사하기 위한 플러그인입니다
 }
 
 group = 'com.example'
@@ -17,13 +17,6 @@ ext {
     set('snippetsDir', file("build/generated-snippets"))
 }
 
-dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-hateoas'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    developmentOnly 'org.springframework.boot:spring-boot-devtools'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
-}
 
 tasks.named('test') {
     outputs.dir snippetsDir
@@ -33,4 +26,25 @@ tasks.named('test') {
 tasks.named('asciidoctor') {
     inputs.dir snippetsDir
     dependsOn test
+}
+
+asciidoctor {
+    dependsOn test // (2) gradle build 시 test -> asciidoctor 순으로 수행됩니다.
+}
+
+bootJar {
+    dependsOn asciidoctor // (3) gradle build 시 asciidoctor -> bootJar 순으로 수행됩니다.
+    from ("/html5") { // (4) gradle build 시 ./build/asciidoc/html5/ 에 html 파일이 생깁니다.
+        into 'static/docs' // 이것을 jar 안에 /static/docs/ 폴더에 복사가 됩니다.
+    }
+}
+
+
+dependencies {
+    implementation('org.springframework.boot:spring-boot-starter-web')
+    implementation('org.springframework.boot:spring-boot-starter-data-jpa')
+    implementation('org.projectlombok:lombok')
+    runtimeOnly('com.h2database:h2')
+    testImplementation('org.springframework.boot:spring-boot-starter-test')
+    testImplementation('org.springframework.restdocs:spring-restdocs-mockmvc') // mockmvc 를 restdocs 에 사용할 수 있게 하는 라이브러리입니다.
 }
