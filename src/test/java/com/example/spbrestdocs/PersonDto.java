@@ -2,13 +2,17 @@ package com.example.spbrestdocs;
 
 import lombok.Builder;
 
-import java.util.Date;
+import java.time.LocalDate;
 
-@Builder
+
 public class PersonDto {
-    private Long id;
-    private String firstName;
-    private String lastName;
-    private Date birthDate;
-    private String hobby;
+
+    @Builder
+    public class Response {
+        private Long id;
+        private String firstName;
+        private String lastName;
+        private LocalDate birthDate;
+        private String hobby;
+    }
 }

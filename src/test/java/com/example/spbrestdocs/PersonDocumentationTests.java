@@ -10,6 +10,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.time.LocalDate;
+
 @RunWith(SpringRunner.class)
 @WebMvcTest(PersonController.class)
 @AutoConfigureRestDocs(uriScheme = "https", uriHost = "docs.api.com") // (1)
