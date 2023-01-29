@@ -1,6 +1,6 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '2.5.6'
+    id 'org.springframework.boot' version '2.5.5'
     id 'io.spring.dependency-management' version '1.1.0'
     id "org.asciidoctor.convert" version "1.5.9.2" // (1) AsciiDoc 파일을 컨버팅하고 Build 폴더에 복사하기 위한 플러그인입니다
 }
@@ -44,6 +44,7 @@ dependencies {
     implementation('org.springframework.boot:spring-boot-starter-web')
     implementation('org.springframework.boot:spring-boot-starter-data-jpa')
     implementation('org.projectlombok:lombok')
+    implementation 'com.dukescript.api:junit-browser-runner:1.0'
     runtimeOnly('com.h2database:h2')
     testImplementation('org.springframework.boot:spring-boot-starter-test')
     testImplementation('org.springframework.restdocs:spring-restdocs-mockmvc') // mockmvc 를 restdocs 에 사용할 수 있게 하는 라이브러리입니다.
